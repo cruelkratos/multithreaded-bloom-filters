@@ -1,0 +1,29 @@
+#include<bloom_filter.hpp>
+#include<hash_functions.hpp>
+#include<vector>
+#include<string>
+#include<vector>
+#include<cassert>
+
+
+BloomFilter::BloomFilter(size_t m_bits , size_t k_hashes){
+  this->m_bits = m_bits;
+  this->k_hashes = k_hashes;
+  auto size = (this->m_bits +63)/64;
+  this->bit_array = std::vector<std::atomic<uint64_t>>(size,0);
+
+}
+
+size_t BloomFilter::hash_i(const std::string &item , size_t i) const {
+  assert(i < this->k_hashes);
+  auto hash_a = Hasher::hash_a(item);
+  auto hash_b = Hasher::hash_b(item);
+  auto hash = (hash_a + i*hash_b)%(this->m_bits);
+  return hash;
+}
+
+void BloomFilter::Insert(const std::string &s){
+  for(int i = 0;i<this->k_hashes;i++){
+    auto bit_idx = this->hash_i(s,i);
+  }
+}
