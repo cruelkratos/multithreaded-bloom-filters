@@ -1,6 +1,8 @@
 # Thread-Safe Bloom Filter Implementation
 
-A high-performance, thread-safe Bloom filter implementation in C++ featuring atomic operations, singleton pattern, and custom hash functions for optimal concurrent access.
+A high-performance, thread-safe Bloom filter implementation in C++ featuring atomic operations, singleton pattern, and custom hash functions for optimal concurrent access. 
+
+*I did this project basically coz i wanted to do some multithreading in c++ and use c++ other than just doing algorithm problems.*
 
 ## Features
 
