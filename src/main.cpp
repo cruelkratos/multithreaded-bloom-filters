@@ -1,29 +1,26 @@
 #include "bloom_filter.hpp"
 #include "hash_functions.hpp"
 #include <iostream>
+#include <thread>
+
+void insert(BloomFilter* obj, const std::string& data){
+  obj->Insert(data);
+}
+
 int main(){
-  BloomFilter* obj = new BloomFilter(1<<20,6); 
-  obj->Insert("garv");
-  obj->Insert("linus");
-  if(obj->Contains("garv")){
-    std::cout<<"YEs"<<std::endl;
+  BloomFilter* obj = BloomFilter::getInstance(1<<20,6);
+  std::thread t1(insert, obj, "garv");
+  std::thread t2(insert, obj, "linus");
+  t1.join();
+  t2.join();
+  if (obj->Contains("garv")) {
+    std::cout << "garv found!" << std::endl;
   }
-  if(obj->Contains("gavr")){
-    std::cout<<"YEs"<<std::endl;
+  if (obj->Contains("linus")) {
+    std::cout << "linus found!" << std::endl;
   }
-  else{
-    std::cout<<"nooo"<<std::endl;
+  if (!obj->Contains("gavr")) {
+    std::cout << "gavr not found!" << std::endl;
   }
-  if(obj->Contains("linus")){
-    std::cout<<"YESD"<<std::endl;
-  }
-  else{
-    std::cout<<"NO"<<std::endl;
-  }
-  if(obj->Contains("liiinusss")){
-    std::cout<<"YES D"<<std::endl;
-  }
-  else{
-    std::cout<<"NO"<<std::endl;
-  }
+
 }

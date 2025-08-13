@@ -5,6 +5,8 @@
 #include<vector>
 #include<cassert>
 
+std::unique_ptr<BloomFilter> BloomFilter::instance = nullptr;
+std::mutex BloomFilter::mtx;
 
 BloomFilter::BloomFilter(size_t m_bits , size_t k_hashes){
   this->m_bits = m_bits;
@@ -43,4 +45,12 @@ bool BloomFilter::Contains(const std::string &s){
     if ((block_val & (1ULL << val)) == 0) return false;
   }
   return true;
+}
+
+BloomFilter* BloomFilter::getInstance(size_t m_bits , size_t k_hashes){
+  std::lock_guard<std::mutex> lock(mtx);
+  if(!instance){
+    instance = std::unique_ptr<BloomFilter>(new BloomFilter(m_bits, k_hashes));
+  }
+  return instance.get();
 }
