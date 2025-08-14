@@ -1,6 +1,4 @@
-Here’s your updated README with your benchmark parameters added:
 
-````markdown
 # Thread-Safe Bloom Filter Implementation
 
 A high-performance, thread-safe Bloom filter implementation in C++ featuring atomic operations, singleton pattern, and custom hash functions for optimal concurrent access. 
@@ -166,7 +164,7 @@ MIT License - see LICENSE file for details.
 
 **Note**: This implementation prioritizes performance and thread safety. For applications requiring exact membership testing, consider using a traditional hash table or set instead.
 
-```
 
-If you want, I can also add a **False Positive Rate measurement** section to your README so your benchmark reports accuracy along with timings. That would make the results section more complete.
-```
+
+
+
