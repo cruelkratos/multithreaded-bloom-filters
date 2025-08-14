@@ -1,8 +1,11 @@
+Here’s your updated README with your benchmark parameters added:
+
+````markdown
 # Thread-Safe Bloom Filter Implementation
 
 A high-performance, thread-safe Bloom filter implementation in C++ featuring atomic operations, singleton pattern, and custom hash functions for optimal concurrent access. 
 
-*I did this project basically coz i wanted to do some multithreading in c++ and use c++ other than just doing algorithm problems.*
+*I did this project basically coz I wanted to do some multithreading in C++ and use C++ other than just doing algorithm problems.*
 
 ## Features
 
@@ -31,7 +34,7 @@ private:
     void Insert(const std::string &s);
     bool Contains(const std::string &s);
 };
-```
+````
 
 ### Key Components
 
@@ -40,37 +43,39 @@ private:
 3. **Dual Hash Functions**: Reduces clustering and improves distribution
 4. **Relaxed Memory Ordering**: Optimized for performance while maintaining correctness
 
-
-
 ## 🛡️ Thread Safety Guarantees
 
 ### Concurrency Model
-- **Multiple Readers**: Unlimited concurrent `Contains()` calls
-- **Multiple Writers**: Unlimited concurrent `Insert()` calls
-- **Reader-Writer**: `Contains()` and `Insert()` can execute concurrently
-- **Singleton Safety**: Instance creation is protected by mutex
+
+* **Multiple Readers**: Unlimited concurrent `Contains()` calls
+* **Multiple Writers**: Unlimited concurrent `Insert()` calls
+* **Reader-Writer**: `Contains()` and `Insert()` can execute concurrently
+* **Singleton Safety**: Instance creation is protected by mutex
 
 ### Atomic Operations
-- `fetch_or()`: Atomically sets bits without race conditions
-- `load()`: Atomically reads 64-bit blocks
-- `memory_order_relaxed`: Optimal performance for independent operations
+
+* `fetch_or()`: Atomically sets bits without race conditions
+* `load()`: Atomically reads 64-bit blocks
+* `memory_order_relaxed`: Optimal performance for independent operations
 
 ### Memory Safety
-- No data races on bit manipulation
-- ABA problem eliminated through atomic operations
-- Memory ordering guarantees prevent reordering issues
+
+* No data races on bit manipulation
+* ABA problem eliminated through atomic operations
+* Memory ordering guarantees prevent reordering issues
 
 ## Performance Characteristics
 
-| Operation | Time Complexity | Space Complexity | Thread Safety |
-|-----------|----------------|------------------|---------------|
-| Insert    | O(k)           | O(1)             | ✅ Lock-free   |
-| Contains  | O(k)           | O(1)             | ✅ Lock-free   |
-| Initialize| O(m/64)        | O(m/64)          | ✅ Mutex protected |
+| Operation  | Time Complexity | Space Complexity | Thread Safety     |
+| ---------- | --------------- | ---------------- | ----------------- |
+| Insert     | O(k)            | O(1)             | ✅ Lock-free       |
+| Contains   | O(k)            | O(1)             | ✅ Lock-free       |
+| Initialize | O(m/64)         | O(m/64)          | ✅ Mutex protected |
 
 Where:
-- `k` = number of hash functions
-- `m` = number of bits in the filter
+
+* `k` = number of hash functions
+* `m` = number of bits in the filter
 
 ## Usage Example
 
@@ -94,6 +99,26 @@ int main() {
 }
 ```
 
+## Benchmark Results
+
+**Test Parameters:**
+
+* `m` = 2^20 bits ~ 1e6 bits
+* `k` = 6 hash functions
+* Dataset size = 100000 strings
+
+**Output:**
+
+```
+garv found!
+linus found!
+gavr not found!
+Insertion: 63.4592 ms
+Lookup: 62.1632 ms
+```
+
+Insertion and lookup performance are nearly identical due to both operations computing `k` hashes and touching `k` bits.
+
 ## Building
 
 ```bash
@@ -106,27 +131,32 @@ cmake --build .
 ## Configuration
 
 ### Optimal Parameters
-- **False Positive Rate**: `p ≈ (1 - e^(-kn/m))^k`
-- **Optimal k**: `k = (m/n) * ln(2)`
-- **Memory Usage**: `m` bits total
+
+* **False Positive Rate**: `p ≈ (1 - e^(-kn/m))^k`
+* **Optimal k**: `k = (m/n) * ln(2)`
+* **Memory Usage**: `m` bits total
 
 Where:
-- `n` = expected number of elements
-- `m` = number of bits in filter
-- `k` = number of hash functions
-- `p` = desired false positive probability
+
+* `n` = expected number of elements
+* `m` = number of bits in filter
+* `k` = number of hash functions
+* `p` = desired false positive probability
+
 ## Thread Safety Analysis
 
 ### Race Condition Prevention
+
 1. **Bit Setting Race**: Atomic `fetch_or` ensures multiple threads can safely set the same bit
 2. **Read-Write Race**: Atomic `load` provides consistent reads during concurrent writes
 3. **Memory Reordering**: `memory_order_relaxed` prevents compiler/CPU reordering while maintaining performance
 
 ### Lock-Free Benefits
-- **No Deadlocks**: No mutexes in hot paths
-- **High Scalability**: Performance scales with CPU cores
-- **Low Latency**: No blocking or context switching
-- **Progress Guarantee**: Operations always complete in bounded time
+
+* **No Deadlocks**: No mutexes in hot paths
+* **High Scalability**: Performance scales with CPU cores
+* **Low Latency**: No blocking or context switching
+* **Progress Guarantee**: Operations always complete in bounded time
 
 ## License
 
@@ -135,3 +165,8 @@ MIT License - see LICENSE file for details.
 ---
 
 **Note**: This implementation prioritizes performance and thread safety. For applications requiring exact membership testing, consider using a traditional hash table or set instead.
+
+```
+
+If you want, I can also add a **False Positive Rate measurement** section to your README so your benchmark reports accuracy along with timings. That would make the results section more complete.
+```

@@ -1,4 +1,5 @@
 #include "bloom_filter.hpp"
+#include "benchmark.hpp"
 #include "hash_functions.hpp"
 #include <iostream>
 #include <thread>
@@ -22,5 +23,16 @@ int main(){
   if (!obj->Contains("gavr")) {
     std::cout << "gavr not found!" << std::endl;
   }
+  Benchmark b(100000);
+  b.generate_keys();
+  double insert_time = b.measure([&](const std::string &key) {
+        obj->Insert(key);
+    });
 
+    double lookup_time = b.measure([&](const std::string &key) {
+        obj->Contains(key);
+    });
+
+    std::cout << "Insertion: " << insert_time << " ms\n";
+    std::cout << "Lookup: " << lookup_time << " ms\n";
 }
