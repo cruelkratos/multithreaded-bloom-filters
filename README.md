@@ -7,6 +7,8 @@ A high-performance, thread-safe Bloom filter implementation in C++ featuring ato
 
 *I did this project basically coz I wanted to do some multithreading in C++ and use C++ other than just doing algorithm problems.*
 
+Possibly will Integrate this with Distributed DDOS Detection project for **ip membership** tests.
+
 ## Features
 
 - **Thread-Safe**: Full concurrent support with atomic operations
@@ -40,10 +42,9 @@ private:
 
 1. **Atomic Bit Array**: Each 64-bit block is wrapped in `std::atomic<uint64_t>` for lock-free bit manipulation
 2. **Singleton Pattern**: Thread-safe lazy initialization with mutex protection
-3. **Dual Hash Functions**: Reduces clustering and improves distribution
-4. **Relaxed Memory Ordering**: Optimized for performance while maintaining correctness
+3. **Dual Hash Functions**: Used to simulate k-hashes.
 
-## 🛡️ Thread Safety Guarantees
+## Thread Safety Guarantees
 
 ### Concurrency Model
 
@@ -58,19 +59,14 @@ private:
 * `load()`: Atomically reads 64-bit blocks
 * `memory_order_relaxed`: Optimal performance for independent operations
 
-### Memory Safety
-
-* No data races on bit manipulation
-* ABA problem eliminated through atomic operations
-* Memory ordering guarantees prevent reordering issues
 
 ## Performance Characteristics
 
 | Operation  | Time Complexity | Space Complexity | Thread Safety     |
 | ---------- | --------------- | ---------------- | ----------------- |
-| Insert     | O(k)            | O(1)             | ✅ Lock-free       |
-| Contains   | O(k)            | O(1)             | ✅ Lock-free       |
-| Initialize | O(m/64)         | O(m/64)          | ✅ Mutex protected |
+| Insert     | O(k)            | O(1)             | Lock-free       |
+| Contains   | O(k)            | O(1)             |  Lock-free       |
+| Initialize | O(m/64)         | O(m/64)          |  Mutex protected |
 
 Where:
 
@@ -143,24 +139,6 @@ Where:
 * `k` = number of hash functions
 * `p` = desired false positive probability
 
-## Thread Safety Analysis
-
-### Race Condition Prevention
-
-1. **Bit Setting Race**: Atomic `fetch_or` ensures multiple threads can safely set the same bit
-2. **Read-Write Race**: Atomic `load` provides consistent reads during concurrent writes
-3. **Memory Reordering**: `memory_order_relaxed` prevents compiler/CPU reordering while maintaining performance
-
-### Lock-Free Benefits
-
-* **No Deadlocks**: No mutexes in hot paths
-* **High Scalability**: Performance scales with CPU cores
-* **Low Latency**: No blocking or context switching
-* **Progress Guarantee**: Operations always complete in bounded time
-
-## License
-
-MIT License - see LICENSE file for details.
 
 ---
 
