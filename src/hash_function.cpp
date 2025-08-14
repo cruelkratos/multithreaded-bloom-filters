@@ -1,4 +1,5 @@
 #include <hash_functions.hpp>
+#include <murmur3.h>
 #include <bitset>
 uint64_t Hasher::hash_a(const std::string &s){
   uint64_t fnvPrime = 16777619;
@@ -15,6 +16,7 @@ uint64_t Hasher::hash_a(const std::string &s){
 
 uint64_t Hasher::hash_b(const std::string &s) {
   std::hash<std::string> hasher;
-  size_t hash_value = hasher(s);
-  return static_cast<uint64_t>(hash_value);
+  uint64_t out[2]; 
+  MurmurHash3_x64_128(s.data(), static_cast<int>(s.size()), 0x12345678, out);
+  return out[0]; // first 64 bits
 }

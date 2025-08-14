@@ -13,6 +13,7 @@ set(SOURCES
     src/main.cpp
     src/bloom_filter.cpp
     src/hash_function.cpp
+    src/murmur3.cpp
 )
 
 # Define the executable target (what you want to build)
