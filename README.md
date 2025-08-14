@@ -1,6 +1,8 @@
 
 # Thread-Safe Bloom Filter Implementation
 
+[![Build](https://github.com/cruelkratos/multithreaded-bloom-filters/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/cruelkratos/multithreaded-bloom-filters/actions/workflows/cmake-single-platform.yml)
+
 A high-performance, thread-safe Bloom filter implementation in C++ featuring atomic operations, singleton pattern, and custom hash functions for optimal concurrent access. 
 
 *I did this project basically coz I wanted to do some multithreading in C++ and use C++ other than just doing algorithm problems.*
