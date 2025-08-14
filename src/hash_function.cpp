@@ -1,6 +1,8 @@
 #include <hash_functions.hpp>
 #include <murmur3.h>
 #include <bitset>
+#include <cstdint>
+
 uint64_t Hasher::hash_a(const std::string &s){
   uint64_t fnvPrime = 16777619;
   uint64_t hash = 2166136261;

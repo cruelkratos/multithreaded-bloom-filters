@@ -1,6 +1,7 @@
 #include<bloom_filter.hpp>
 #include<hash_functions.hpp>
 #include<vector>
+#include <cstdint>
 #include<string>
 #include<vector>
 #include<cassert>
