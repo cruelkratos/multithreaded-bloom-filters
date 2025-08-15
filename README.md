@@ -9,6 +9,15 @@ A high-performance, thread-safe Bloom filter implementation in C++ featuring ato
 
 Possibly will Integrate this with Distributed DDOS Detection project for **ip membership** tests.
 
+## Building
+
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+
 ## Features
 
 - **Thread-Safe**: Full concurrent support with atomic operations
@@ -44,20 +53,6 @@ private:
 2. **Singleton Pattern**: Thread-safe lazy initialization with mutex protection
 3. **Dual Hash Functions**: Used to simulate k-hashes.
 
-## Thread Safety Guarantees
-
-### Concurrency Model
-
-* **Multiple Readers**: Unlimited concurrent `Contains()` calls
-* **Multiple Writers**: Unlimited concurrent `Insert()` calls
-* **Reader-Writer**: `Contains()` and `Insert()` can execute concurrently
-* **Singleton Safety**: Instance creation is protected by mutex
-
-### Atomic Operations
-
-* `fetch_or()`: Atomically sets bits without race conditions
-* `load()`: Atomically reads 64-bit blocks
-* `memory_order_relaxed`: Optimal performance for independent operations
 
 
 ## Performance Characteristics
@@ -115,14 +110,6 @@ Lookup: 62.1632 ms
 
 Insertion and lookup performance are nearly identical due to both operations computing `k` hashes and touching `k` bits.
 
-## Building
-
-```bash
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
 
 ## Configuration
 
