@@ -7,7 +7,7 @@ A high-performance, thread-safe Bloom filter implementation in C++ featuring ato
 
 *I did this project basically coz I wanted to do some multithreading in C++ and use C++ other than just doing algorithm problems.*
 
-Possibly will Integrate this with Distributed DDOS Detection project for **ip membership** tests.
+Possibly will Integrate this with Distributed DDOS Detection project for **Load Shedding**.
 
 ## Building
 
